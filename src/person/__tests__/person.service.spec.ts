@@ -35,9 +35,9 @@ describe('PersonService', () => {
     jest.clearAllMocks();
   });
 
-  describe('create()', () => {
-    it('should throw an error if CPF is invalid', async () => {
-      logger.log('➡️ Testando criação com CPF inválido');
+  describe('When creating a new person', () => {
+    it('should throw an error if the CPF is invalid', async () => {
+      logger.log('- Testing creation with invalid CPF');
 
       const invalidPerson = {
         name: 'John Doe',
@@ -51,12 +51,12 @@ describe('PersonService', () => {
       );
     });
 
-    it('should create and return a valid person', async () => {
+    it('should create and return the person if data is valid', async () => {
       const validPerson = {
         name: 'John Silva',
         cpf: '12345678901',
         birthDate: new Date('1990-01-01'),
-        email: 'joao@email.com',
+        email: 'john@email.com',
       };
 
       const created = { ...validPerson, id: 1 };
@@ -71,8 +71,8 @@ describe('PersonService', () => {
     });
   });
 
-  describe('findAll()', () => {
-    it('should return a list of persons', async () => {
+  describe('When retrieving all persons', () => {
+    it('should return a list of registered persons', async () => {
       const persons = [
         {
           id: 1,
@@ -83,7 +83,7 @@ describe('PersonService', () => {
         },
         {
           id: 2,
-          name: 'Charlie',
+          name: 'Anna',
           cpf: '10987654321',
           email: 'b@b.com',
           birthDate: new Date(),
@@ -98,11 +98,11 @@ describe('PersonService', () => {
     });
   });
 
-  describe('findOne()', () => {
-    it('should return a person by id', async () => {
+  describe('When retrieving a person by ID', () => {
+    it('should return the matching person', async () => {
       const person = {
         id: 1,
-        name: 'Fulano',
+        name: 'Ray',
         cpf: '12345678901',
         birthDate: new Date(),
         email: 'f@f.com',
@@ -115,19 +115,19 @@ describe('PersonService', () => {
     });
   });
 
-  describe('update()', () => {
-    it('should update a person by id', async () => {
+  describe('When updating a person', () => {
+    it('should apply the updates and return the result', async () => {
       const updateResult = { affected: 1 };
       repo.update.mockResolvedValue(updateResult as any);
 
-      const result = await service.update(1, { name: 'Novo Nome' });
+      const result = await service.update(1, { name: 'Updated Name' });
       expect(result).toEqual(updateResult);
-      expect(repo.update).toHaveBeenCalledWith(1, { name: 'Novo Nome' });
+      expect(repo.update).toHaveBeenCalledWith(1, { name: 'Updated Name' });
     });
   });
 
-  describe('remove()', () => {
-    it('should delete a person by id', async () => {
+  describe('When removing a person', () => {
+    it('should delete the person and return the result', async () => {
       const deleteResult = { affected: 1 };
       repo.delete.mockResolvedValue(deleteResult as any);
 
