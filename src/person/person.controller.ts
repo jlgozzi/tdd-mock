@@ -7,11 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { PersonService } from './person.service';
+import { PersonService } from './services/person.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
-@Controller('person')
+@Controller('persons')
 export class PersonController {
   constructor(private readonly personService: PersonService) {}
 
@@ -20,10 +20,10 @@ export class PersonController {
     return this.personService.create(createPersonDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.personService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.personService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
