@@ -15,7 +15,7 @@ export class PersonService {
   }
 
   async create(data: Partial<Person>): Promise<Person> {
-    if (!this.isValidCPF(data.cpf)) {
+    if (this.isValidCPF(data.cpf)) {
       throw new Error('CPF inválido');
     }
 

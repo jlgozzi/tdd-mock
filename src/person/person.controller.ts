@@ -25,18 +25,18 @@ export class PersonController {
     return this.personService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.personService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.personService.findOne(+id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-  //   return this.personService.update(+id, updatePersonDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
+    return this.personService.update(+id, updatePersonDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.personService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.personService.remove(+id);
+  }
 }
