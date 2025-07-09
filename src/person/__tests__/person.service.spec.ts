@@ -51,6 +51,55 @@ describe('PersonService', () => {
       );
     });
 
+    it('should throw an error if CPF is duplicated', async () => {
+      const validPerson = {
+        name: 'Maria',
+        cpf: '12345678901',
+        birthDate: new Date('1990-01-01'),
+        email: 'maria@email.com',
+      };
+      const error: any = new Error();
+      error.code = '23505';
+      error.detail = 'Key (cpf)=(12345678901) already exists.';
+      repo.create.mockReturnValue(validPerson as Person);
+      repo.save.mockRejectedValue(error);
+      await expect(service.create(validPerson)).rejects.toThrow(
+        'Já existe uma pessoa cadastrada com este CPF',
+      );
+    });
+
+    it('should throw an error if email is duplicated', async () => {
+      const validPerson = {
+        name: 'Maria',
+        cpf: '12345678901',
+        birthDate: new Date('1990-01-01'),
+        email: 'maria@email.com',
+      };
+      const error: any = new Error();
+      error.code = '23505';
+      error.detail = 'Key (email)=(maria@email.com) already exists.';
+      repo.create.mockReturnValue(validPerson as Person);
+      repo.save.mockRejectedValue(error);
+      await expect(service.create(validPerson)).rejects.toThrow(
+        'Já existe uma pessoa cadastrada com este e-mail',
+      );
+    });
+
+    it('should throw a generic error if unknown error occurs', async () => {
+      const validPerson = {
+        name: 'Maria',
+        cpf: '12345678901',
+        birthDate: new Date('1990-01-01'),
+        email: 'maria@email.com',
+      };
+      const error: any = new Error('Erro desconhecido');
+      repo.create.mockReturnValue(validPerson as Person);
+      repo.save.mockRejectedValue(error);
+      await expect(service.create(validPerson)).rejects.toThrow(
+        'Erro interno ao cadastrar pessoa',
+      );
+    });
+
     it('should create and return the person if data is valid', async () => {
       const validPerson = {
         name: 'John Silva',
